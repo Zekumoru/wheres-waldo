@@ -5,10 +5,14 @@ import TCharacterLocation from '../characterLocation.types';
 const setCharacterLocations = createAsyncThunk(
   'characterLocation/setCharacterLocations',
   async () => {
+    const collator = new Intl.Collator(undefined, { numeric: true });
     const snapshot = await getDocs(
       collection(getFirestore(), 'character-locations')
     );
-    return snapshot.docs.map((doc) => doc.data() as TCharacterLocation);
+
+    return snapshot.docs
+      .map((doc) => doc.data() as TCharacterLocation)
+      .sort((a, b) => collator.compare(a.name, b.name));
   }
 );
 
