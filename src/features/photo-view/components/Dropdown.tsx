@@ -1,3 +1,4 @@
+import { useAppSelector } from '../../../app/store';
 import StyledDropdown from './StyledDropdown';
 
 type DropdownProps = {
@@ -6,9 +7,11 @@ type DropdownProps = {
   onSelect: (selection: string) => void;
 };
 
-const characters = ['Waldo', 'Odlaw', 'Wilma', 'Woof', 'Wizard Whitebeard'];
-
 const Dropdown = ({ x, y, onSelect }: DropdownProps) => {
+  const characters = useAppSelector(
+    (state) => state.characterLocationReducer.locations
+  ).map((location) => location.name);
+
   return (
     <StyledDropdown x={x} y={y}>
       <ul>
