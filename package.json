@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
+    "interactjs": "^1.10.17",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
+    "@interactjs/types": "^1.10.17",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/styled-components": "^5.1.26",
