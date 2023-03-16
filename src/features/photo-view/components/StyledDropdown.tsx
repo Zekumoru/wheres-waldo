@@ -21,6 +21,7 @@ const StyledDropdown = styled.div<{
 
     &:hover {
       background-color: #282a2b;
+      border-radius: 4px;
     }
   }
 `;
