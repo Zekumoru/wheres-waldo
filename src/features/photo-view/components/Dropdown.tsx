@@ -1,25 +1,23 @@
-import styled from 'styled-components';
-
-const StyledDropdown = styled.div<{
-  x: number;
-  y: number;
-}>`
-  position: absolute;
-  left: ${({ x }) => `${x}px`};
-  top: ${({ y }) => `${y}px`};
-  background-color: #18191a;
-  color: #e6e6e6;
-`;
+import StyledDropdown from './StyledDropdown';
 
 type DropdownProps = {
   x: number;
   y: number;
+  onSelect: (selection: string) => void;
 };
 
-const Dropdown = ({ x, y }: DropdownProps) => {
+const characters = ['Waldo', 'Odlaw', 'Wilma', 'Woof', 'Wizard Whitebeard'];
+
+const Dropdown = ({ x, y, onSelect }: DropdownProps) => {
   return (
     <StyledDropdown x={x} y={y}>
-      Hello world!
+      <ul>
+        {characters.map((character) => (
+          <li onClick={() => onSelect(character)} key={character}>
+            {character}
+          </li>
+        ))}
+      </ul>
     </StyledDropdown>
   );
 };

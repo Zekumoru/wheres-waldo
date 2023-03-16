@@ -6,6 +6,12 @@ const GlobalStyles = createGlobalStyle`
     color: #e6e6e6;
     color-scheme: dark;
   }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 export default GlobalStyles;
