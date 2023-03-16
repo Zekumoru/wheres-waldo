@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { initializeApp } from 'firebase/app';
-import App from './App';
+import { Provider } from 'react-redux';
+import './initializeFirebase';
 import GlobalStyles from './GlobalStyles';
-import firebaseConfig from './firebase.config';
-
-initializeApp(firebaseConfig);
+import store from './app/store';
+import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <GlobalStyles />
-    <App />
+    <Provider store={store}>
+      <GlobalStyles />
+      <App />
+    </Provider>
   </React.StrictMode>
 );
