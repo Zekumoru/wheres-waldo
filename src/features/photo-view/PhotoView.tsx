@@ -3,54 +3,16 @@ import waldo from '../../assets/images/waldo.jpg';
 import { MouseEvent, useState } from 'react';
 import Dropdown from './components/Dropdown';
 import useImageDragScrolling from './hooks/useImageDragScrolling';
-
-type Coord = {
-  x?: number;
-  y?: number;
-};
-
-type Solution = {
-  character: string;
-  coordX: number;
-  coordY: number;
-  radius: number;
-};
-
-const solutions: Solution[] = [
-  {
-    character: 'Waldo',
-    coordX: 1378,
-    coordY: 653,
-    radius: 24,
-  },
-  {
-    character: 'Odlaw',
-    coordX: 1067,
-    coordY: 467,
-    radius: 24,
-  },
-  {
-    character: 'Wilma',
-    coordX: 1869,
-    coordY: 812,
-    radius: 24,
-  },
-  {
-    character: 'Wizard Whitebeard',
-    coordX: 1652,
-    coordY: 442,
-    radius: 24,
-  },
-  {
-    character: 'Woof',
-    coordX: 243,
-    coordY: 792,
-    radius: 24,
-  },
-];
+import ICoord from '../../utils/coords.types';
+import { useAppSelector } from '../../app/store';
 
 const PhotoView = () => {
-  const [coord, setCoord] = useState<Coord>({});
+  const locations = useAppSelector(
+    (state) => state.characterLocationReducer.locations
+  );
+  const [coord, setCoord] = useState<{
+    [P in keyof ICoord]+?: ICoord[P];
+  }>({});
   const [imgRef, imgContainerRef, dragging, setDragging] =
     useImageDragScrolling({
       overrideEndDrag: true,
@@ -73,16 +35,16 @@ const PhotoView = () => {
   };
 
   const handleSelect = (selection: string) => {
-    const solution = solutions.find((s) => s.character === selection);
-    if (!solution) throw new Error(`Missing solution for ${selection}`);
+    const location = locations.find((l) => l.name === selection);
+    if (!location) throw new Error(`Missing solution for ${selection}`);
 
     // Distance formula: sqrt( (pX - cX)**2 + (pY - cY)**2 )
     const distance = Math.sqrt(
-      (coord.x! - solution.coordX) ** 2 + (coord.y! - solution.coordY) ** 2
+      (coord.x! - location.coords.x) ** 2 + (coord.y! - location.coords.y) ** 2
     );
 
     // If distance is within the radius then the clicked coord is inside
-    if (distance <= solution.radius) {
+    if (distance <= location.radius) {
       console.log('Found!');
     } else {
       console.log('Nope...');

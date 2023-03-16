@@ -7,12 +7,6 @@ const initialState = {
   locations: [] as TCharacterLocation[],
 };
 
-// onSnapshot(collection(getFirestore(), 'character-locations'), (snapshot) => {
-//   const locations = snapshot.docs.map(
-//     (doc) => doc.data() as TCharacterLocation
-//   );
-// });
-
 const characterLocationSlice = createSlice({
   name: 'characterLocation',
   initialState,
