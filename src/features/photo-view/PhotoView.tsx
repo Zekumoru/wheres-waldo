@@ -1,7 +1,8 @@
 import StyledPhotoView from './StyledPhotoView';
 import waldo from '../../assets/images/waldo.jpg';
-import { MouseEvent, useRef, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import Dropdown from './components/Dropdown';
+import useImageDragScrolling from './hooks/useImageDragScrolling';
 
 type Coord = {
   x?: number;
@@ -50,13 +51,18 @@ const solutions: Solution[] = [
 
 const PhotoView = () => {
   const [coord, setCoord] = useState<Coord>({});
-  const imgRef = useRef<HTMLImageElement>(null);
+  const [imgRef, imgContainerRef, dragging, setDragging] =
+    useImageDragScrolling({
+      overrideEndDrag: true,
+    });
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.target !== imgRef.current) {
+    if (dragging) {
+      setDragging(false);
       return;
     }
 
+    if (e.target !== imgRef.current) return;
     if (typeof coord.x === 'number' && typeof coord.y === 'number') {
       setCoord({});
       return;
@@ -86,7 +92,7 @@ const PhotoView = () => {
   };
 
   return (
-    <StyledPhotoView onClick={handleClick}>
+    <StyledPhotoView ref={imgContainerRef} onClick={handleClick}>
       <img ref={imgRef} src={waldo} alt="Where's Waldo game" />
       {typeof coord.x === 'number' && typeof coord.y === 'number' && (
         <Dropdown x={coord.x} y={coord.y} onSelect={handleSelect} />
