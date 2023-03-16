@@ -1,7 +1,7 @@
 import StyledPhotoView from './StyledPhotoView';
 import waldo from '../../assets/images/waldo.jpg';
 import { MouseEvent, useState } from 'react';
-import Dropdown from './components/Dropdown';
+import Dropdown from './components/dropdown/Dropdown';
 import useImageDragScrolling from './hooks/useImageDragScrolling';
 import ICoord from '../../utils/coords.types';
 import { useAppSelector } from '../../app/store';
