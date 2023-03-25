@@ -24,6 +24,12 @@ const StyledDropdown = styled.div<{
       background-color: #282a2b;
       border-radius: 4px;
     }
+
+    &.selected {
+      user-select: none;
+      text-decoration: line-through;
+      color: #b0b0b0;
+    }
   }
 `;
 

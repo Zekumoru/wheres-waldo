@@ -42,7 +42,7 @@ const PhotoView = () => {
     if (!location) throw new Error(`Missing solution for ${selection}`);
 
     // Check if not marked yet
-    if (markers.some((m) => m.name !== selection)) {
+    if (!markers.some((m) => m.name === selection)) {
       // Distance formula: sqrt( (pX - cX)**2 + (pY - cY)**2 )
       const distance = Math.sqrt(
         (coord.x! - location.coords.x) ** 2 +
@@ -67,7 +67,12 @@ const PhotoView = () => {
     <StyledPhotoView ref={imgContainerRef} onClick={handleClick}>
       <img ref={imgRef} src={waldo} alt="Where's Waldo game" />
       {typeof coord.x === 'number' && typeof coord.y === 'number' && (
-        <Dropdown x={coord.x} y={coord.y} onSelect={handleSelect} />
+        <Dropdown
+          x={coord.x}
+          y={coord.y}
+          onSelect={handleSelect}
+          selectedNames={markers.map((m) => m.name)}
+        />
       )}
       {markers.map((marker) => (
         <Marker

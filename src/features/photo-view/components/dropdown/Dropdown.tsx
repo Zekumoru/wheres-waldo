@@ -4,10 +4,11 @@ import StyledDropdown from './StyledDropdown';
 type DropdownProps = {
   x: number;
   y: number;
+  selectedNames?: string[];
   onSelect: (selection: string) => void;
 };
 
-const Dropdown = ({ x, y, onSelect }: DropdownProps) => {
+const Dropdown = ({ x, y, onSelect, selectedNames }: DropdownProps) => {
   const characters = useAppSelector(
     (state) => state.characterLocationReducer.locations
   ).map((location) => location.name);
@@ -15,11 +16,22 @@ const Dropdown = ({ x, y, onSelect }: DropdownProps) => {
   return (
     <StyledDropdown x={x} y={y}>
       <ul>
-        {characters.map((character) => (
-          <li onClick={() => onSelect(character)} key={character}>
-            {character}
-          </li>
-        ))}
+        {characters.map((character) => {
+          const isAlreadySelected = selectedNames?.includes(character) ?? false;
+
+          return (
+            <li
+              className={`${isAlreadySelected ? 'selected' : ''}`}
+              onClick={() => {
+                if (isAlreadySelected) return;
+                onSelect(character);
+              }}
+              key={character}
+            >
+              {character}
+            </li>
+          );
+        })}
       </ul>
     </StyledDropdown>
   );
