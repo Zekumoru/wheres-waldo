@@ -45,7 +45,7 @@ const HighScoreList = () => {
           <li key={id}>
             <div>{name}</div>
             <div className="score-container">
-              <div>{score}</div>
+              <div>{score.toFixed(2)}</div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
