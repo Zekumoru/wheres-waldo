@@ -1,6 +1,6 @@
 import StyledPhotoView from './StyledPhotoView';
 import waldo from '../../assets/images/waldo.jpg';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import Dropdown from './components/dropdown/Dropdown';
 import useImageDragScrolling from './hooks/useImageDragScrolling';
 import ICoord from '../../utils/coords.types';
@@ -8,7 +8,11 @@ import { useAppSelector } from '../../app/store';
 import Marker from './components/marker/Marker';
 import IMarker from './components/marker/marker.types';
 
-const PhotoView = () => {
+type PhotoViewProps = {
+  onFinish?: () => void;
+};
+
+const PhotoView = ({ onFinish }: PhotoViewProps) => {
   const locations = useAppSelector(
     (state) => state.characterLocationReducer.locations
   );
@@ -20,6 +24,18 @@ const PhotoView = () => {
       overrideEndDrag: true,
     });
   const [markers, setMarkers] = useState<IMarker[]>([]);
+  const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    if (
+      !finished &&
+      markers.length !== 0 &&
+      markers.length === locations.length
+    ) {
+      onFinish?.();
+      setFinished(true);
+    }
+  }, [markers]);
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (dragging) {
