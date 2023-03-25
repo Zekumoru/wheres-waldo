@@ -13,6 +13,9 @@ const StyledHighScoreList = styled.div`
   ul {
     text-align: center;
     font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   li {
