@@ -4,9 +4,11 @@ import ClockTimer from './components/ClockTimer';
 import PhotoView from './features/photo-view/PhotoView';
 
 const StyledApp = styled.div`
+  padding: 16px;
+
   h1 {
     text-align: center;
-    margin-block: 16px 8px;
+    margin-block: 0 8px;
   }
 `;
 
