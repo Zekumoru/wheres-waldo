@@ -10,6 +10,10 @@ const StyledHighScoreList = styled.div`
     text-align: center;
   }
 
+  p {
+    text-align: center;
+  }
+
   ul {
     text-align: center;
     font-size: 1.2rem;
@@ -43,30 +47,34 @@ const HighScoreList = () => {
   return (
     <StyledHighScoreList>
       <h2>High Scores</h2>
-      <ul>
-        {highScores.map(({ id, name, score }) => (
-          <li key={id}>
-            <div>{name}</div>
-            <div className="score-container">
-              <div>{score.toFixed(2)}</div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="clock-icon"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {highScores.length === 0 ? (
+        <p>No scores yet! Be the one to have their name here!</p>
+      ) : (
+        <ul>
+          {highScores.map(({ id, name, score }) => (
+            <li key={id}>
+              <div>{name}</div>
+              <div className="score-container">
+                <div>{score.toFixed(2)}</div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="clock-icon"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </StyledHighScoreList>
   );
 };
