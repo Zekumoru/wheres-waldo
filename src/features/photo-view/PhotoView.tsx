@@ -5,6 +5,8 @@ import Dropdown from './components/dropdown/Dropdown';
 import useImageDragScrolling from './hooks/useImageDragScrolling';
 import ICoord from '../../utils/coords.types';
 import { useAppSelector } from '../../app/store';
+import Marker from './components/marker/Marker';
+import IMarker from './components/marker/marker.types';
 
 const PhotoView = () => {
   const locations = useAppSelector(
@@ -17,6 +19,7 @@ const PhotoView = () => {
     useImageDragScrolling({
       overrideEndDrag: true,
     });
+  const [markers, setMarkers] = useState<IMarker[]>([]);
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (dragging) {
@@ -38,16 +41,23 @@ const PhotoView = () => {
     const location = locations.find((l) => l.name === selection);
     if (!location) throw new Error(`Missing solution for ${selection}`);
 
-    // Distance formula: sqrt( (pX - cX)**2 + (pY - cY)**2 )
-    const distance = Math.sqrt(
-      (coord.x! - location.coords.x) ** 2 + (coord.y! - location.coords.y) ** 2
-    );
+    // Check if not marked yet
+    if (markers.some((m) => m.name !== selection)) {
+      // Distance formula: sqrt( (pX - cX)**2 + (pY - cY)**2 )
+      const distance = Math.sqrt(
+        (coord.x! - location.coords.x) ** 2 +
+          (coord.y! - location.coords.y) ** 2
+      );
 
-    // If distance is within the radius then the clicked coord is inside
-    if (distance <= location.radius) {
-      console.log('Found!');
-    } else {
-      console.log('Nope...');
+      // If distance is within the radius then the clicked coord is inside
+      if (distance <= location.radius) {
+        setMarkers((markers) => [
+          ...markers,
+          { coords: location.coords, radius: location.radius, name: selection },
+        ]);
+      } else {
+        console.log('Nope...');
+      }
     }
 
     setCoord({});
@@ -59,6 +69,12 @@ const PhotoView = () => {
       {typeof coord.x === 'number' && typeof coord.y === 'number' && (
         <Dropdown x={coord.x} y={coord.y} onSelect={handleSelect} />
       )}
+      {markers.map((marker) => (
+        <Marker
+          key={`${marker.coords.x},${marker.coords.y}:${marker.radius}`}
+          marker={marker}
+        />
+      ))}
     </StyledPhotoView>
   );
 };
