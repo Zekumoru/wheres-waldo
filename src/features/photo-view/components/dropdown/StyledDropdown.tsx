@@ -7,6 +7,7 @@ const StyledDropdown = styled.div<{
   position: absolute;
   left: ${({ x }) => `${x}px`};
   top: ${({ y }) => `${y}px`};
+  z-index: 100;
   background-color: #18191a;
   color: #e6e6e6;
   border-radius: 4px;
