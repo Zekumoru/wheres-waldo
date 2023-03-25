@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import ClockTimer from './components/ClockTimer';
+import HighScoreList from './features/high-score/HighScoreList';
 import PhotoView from './features/photo-view/PhotoView';
 
 const StyledApp = styled.div`
@@ -29,6 +30,7 @@ const App = () => {
         }}
       />
       <PhotoView onFinish={handleFinish} />
+      <HighScoreList />
     </StyledApp>
   );
 };
