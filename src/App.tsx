@@ -1,20 +1,33 @@
 import { useState } from 'react';
+import styled from 'styled-components';
+import ClockTimer from './components/ClockTimer';
 import PhotoView from './features/photo-view/PhotoView';
 
+const StyledApp = styled.div`
+  h1 {
+    text-align: center;
+    margin-block: 16px 8px;
+  }
+`;
+
 const App = () => {
-  const [startTime, setStartTime] = useState(Date.now());
+  const [finished, setFinished] = useState(false);
 
   const handleFinish = () => {
-    const endTime = Date.now();
-    const totalTimeInSeconds = (endTime - startTime) / 1000;
-
-    console.log('It took you:', totalTimeInSeconds, 'seconds!');
+    setFinished(true);
   };
 
   return (
-    <div className="App">
+    <StyledApp className="App">
+      <h1>Where's Waldo!</h1>
+      <ClockTimer
+        stop={finished}
+        onTimerStop={(totalTimeInSeconds) => {
+          console.log('You finished in', totalTimeInSeconds, 'seconds');
+        }}
+      />
       <PhotoView onFinish={handleFinish} />
-    </div>
+    </StyledApp>
   );
 };
 
