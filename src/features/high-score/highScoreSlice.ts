@@ -4,6 +4,8 @@ import {
   doc,
   getFirestore,
   onSnapshot,
+  orderBy,
+  query,
   setDoc,
 } from 'firebase/firestore';
 import store from '../../app/store';
@@ -28,11 +30,14 @@ const highScoreSlice = createSlice({
 
 const HighScoreActions = highScoreSlice.actions;
 
-onSnapshot(collection(getFirestore(), 'high-scores'), (snapshot) => {
-  store.dispatch(
-    HighScoreActions.set(snapshot.docs.map((doc) => doc.data() as IHighScore))
-  );
-});
+onSnapshot(
+  query(collection(getFirestore(), 'high-scores'), orderBy('score', 'asc')),
+  (snapshot) => {
+    store.dispatch(
+      HighScoreActions.set(snapshot.docs.map((doc) => doc.data() as IHighScore))
+    );
+  }
+);
 
 const highScoreReducer = highScoreSlice.reducer;
 export default highScoreReducer;
