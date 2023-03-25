@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import characterLocationReducer from '../features/photo-view/characterLocationSlice';
+import highScoreReducer from '../features/high-score/highScoreSlice';
 import { setCharacterLocations } from '../features/photo-view/thunks/setCharacterLocations';
 
 const store = configureStore({
   reducer: {
     characterLocationReducer,
+    highScoreReducer,
   },
 });
 
